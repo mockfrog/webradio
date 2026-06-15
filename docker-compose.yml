@@ -12,20 +12,20 @@ services:
     environment:
       # --- Cron configuration ---
       # e.g., "0 18 * * 1-5" (Mo-Fr at 18:00) or "*/5 * * * *" (every 5 minutes for testing)
-      - CRON_SCHEDULE=0 18 * * 1-5
+      - CRON_SCHEDULE=${CRON_SCHEDULE:-0 18 * * 1-5}
       
       # --- Stream to record ---
-      - STREAM_URL=http://example.com/stream.mp3
-      - RECORD_DURATION_MINS=60
+      - STREAM_URL=${STREAM_URL:-http://example.com/stream.mp3}
+      - RECORD_DURATION_MINS=${RECORD_DURATION_MINS:-60}
 
       # --- Podcast XML Feed Metadata ---
       # External base URL where the podcast files can be reached (crucial for feed URLs)
-      - BASE_URL=http://localhost:8080
-      - PODCAST_TITLE=Mein Webradio Podcast
-      - PODCAST_DESCRIPTION=Tägliche automatische Aufnahmen von meinem Lieblings-Webradio.
-      - PODCAST_LANG=de
+      - BASE_URL=${BASE_URL:-http://localhost:8080}
+      - PODCAST_TITLE=${PODCAST_TITLE:-Mein Webradio Podcast}
+      - PODCAST_DESCRIPTION=${PODCAST_DESCRIPTION:-Tägliche automatische Aufnahmen von meinem Lieblings-Webradio.}
+      - PODCAST_LANG=${PODCAST_LANG:-de}
 
       # --- System Configuration ---
       # Timezone for the container, ensuring cron runs in local time
-      - TZ=Europe/Berlin
+      - TZ=${TZ:-Europe/Berlin}
 
