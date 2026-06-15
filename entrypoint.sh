@@ -12,9 +12,16 @@ export PODCAST_LANG="${PODCAST_LANG:-de}"
 # Ensure directories exist
 mkdir -p "$PODCAST_DIR"
 
-# Save environment variables to env.sh for the cron environment
-declare -p STREAM_URL RECORD_DURATION_MINS PODCAST_DIR BASE_URL PODCAST_TITLE PODCAST_DESCRIPTION PODCAST_LANG > /app/env.sh
-chmod +x /app/env.sh
+# Save environment variables to env.sh for the cron environment using POSIX exports
+cat <<EOF > /app/env.sh
+export STREAM_URL="${STREAM_URL}"
+export RECORD_DURATION_MINS="${RECORD_DURATION_MINS}"
+export PODCAST_DIR="${PODCAST_DIR}"
+export BASE_URL="${BASE_URL}"
+export PODCAST_TITLE="${PODCAST_TITLE}"
+export PODCAST_DESCRIPTION="${PODCAST_DESCRIPTION}"
+export PODCAST_LANG="${PODCAST_LANG}"
+EOF
 
 # Run the feed generator once on startup to ensure the XML file exists
 echo "Initialer Feed-Aufbau..."
