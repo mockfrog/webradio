@@ -6,7 +6,7 @@ services:
     container_name: webradio-recorder
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "8080:8080"
     volumes:
       - ${HOST_PODCAST_DIR:-./podcasts}:/app/podcasts
     environment:
