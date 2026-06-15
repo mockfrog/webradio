@@ -1,0 +1,16 @@
+# Ignore recorded audio files
+*.mp3
+
+# Ignore generated podcast feed
+*.xml
+
+# Ignore local environment/debug files
+env.sh
+crontab.txt
+/podcasts/
+
+# OS/IDE metadata
+.DS_Store
+.vscode/
+.idea/
+.antigravitycli/

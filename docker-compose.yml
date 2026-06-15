@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  webradio-recorder:
+    build: .
+    container_name: webradio-recorder
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - podcast-data:/app/podcasts
+    environment:
+      # --- Cron configuration ---
+      # e.g., "0 18 * * 1-5" (Mo-Fr at 18:00) or "*/5 * * * *" (every 5 minutes for testing)
+      - CRON_SCHEDULE=0 18 * * 1-5
+      
+      # --- Stream to record ---
+      - STREAM_URL=http://example.com/stream.mp3
+      - RECORD_DURATION_MINS=60
+
+      # --- Podcast XML Feed Metadata ---
+      # External base URL where the podcast files can be reached (crucial for feed URLs)
+      - BASE_URL=http://localhost:8080
+      - PODCAST_TITLE=Mein Webradio Podcast
+      - PODCAST_DESCRIPTION=Tägliche automatische Aufnahmen von meinem Lieblings-Webradio.
+      - PODCAST_LANG=de
+
+      # --- System Configuration ---
+      # Timezone for the container, ensuring cron runs in local time
+      - TZ=Europe/Berlin
+
+volumes:
+  podcast-data:
