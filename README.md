@@ -43,6 +43,17 @@ This project automatically records webradio streams using a cron job inside a Do
    http://<your-server-ip>:8080/podcast.xml
    ```
 
+4. **Privacy / Secret Feed Path (Optional)**
+   To hide the podcast feed and recorded MP3 files from the public (protecting against copyright issues):
+   - Set the `SECRET_TOKEN` environment variable in your Portainer stack settings to a random secret string (e.g., `a8f9b2c3d4e5`).
+   - The feed and the MP3 files will automatically be generated in a subdirectory named after your secret token.
+   - Directory listing (`autoindex`) is disabled globally to prevent indexing or searching the folder structure.
+   - The subscription URL in your podcatcher then becomes:
+     ```text
+     http://<your-server-ip>:8080/a8f9b2c3d4e5/podcast.xml
+     ```
+     *(or simply `http://<your-server-ip>:8080/a8f9b2c3d4e5/` since `podcast.xml` is configured as the index file).*
+
 ---
 
 ## Useful Commands

@@ -29,3 +29,7 @@ services:
       # Timezone for the container, ensuring cron runs in local time
       - TZ=${TZ:-Europe/Berlin}
 
+      # --- Privacy ---
+      # Optional: set a secret token path (e.g., a8f9b2c3) to hide the feed and audio files
+      - SECRET_TOKEN=${SECRET_TOKEN:-}
+
