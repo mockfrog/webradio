@@ -32,9 +32,19 @@ OUTPUT_FILE="$TARGET_DIR/fsr_${TIMESTAMP}.mp3"
 # -loglevel warning: Nur wichtige Meldungen ausgeben
 ffmpeg -i "$STREAM_URL" -t "$DURATION_SEC" -c copy -metadata artist="FSR" -metadata title="FSR-$TIMESTAMP" "$OUTPUT_FILE" -y -loglevel warning
 
-# Nach erfolgreicher Aufnahme den Podcast-Feed aktualisieren
-if [ $? -eq 0 ]; then
-    echo "Aufnahme erfolgreich. Aktualisiere Podcast-Feed..."
+# Exit-Code von ffmpeg sichern
+FFMPEG_STATUS=$?
+
+if [ $FFMPEG_STATUS -ne 0 ]; then
+    echo "Warnung: ffmpeg wurde mit Fehler beendet (Status: $FFMPEG_STATUS)."
+fi
+
+# Podcast-Feed aktualisieren, wenn die Datei existiert und nicht leer ist
+if [ -s "$OUTPUT_FILE" ]; then
+    echo "Aufnahmedatei vorhanden. Aktualisiere Podcast-Feed..."
+    # Setze PODCAST_DIR auf das tatsächliche Zielverzeichnis für update_feed.py
+    export PODCAST_DIR="$TARGET_DIR"
+
     # Prüfe ob update_feed.py im App-Ordner oder aktuellen Ordner liegt
     if [ -f "/app/update_feed.py" ]; then
         python3 /app/update_feed.py
@@ -44,7 +54,7 @@ if [ $? -eq 0 ]; then
         echo "update_feed.py nicht gefunden. Feed wurde nicht aktualisiert."
     fi
 else
-    echo "Fehler bei der Aufnahme mit ffmpeg."
+    echo "Fehler: Aufnahmedatei wurde nicht erstellt oder ist leer. Feed wird nicht aktualisiert."
     exit 1
 fi
 

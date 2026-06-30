@@ -24,6 +24,7 @@ mkdir -p "$PODCAST_DIR"
 
 # Save environment variables to env.sh for the cron environment using POSIX exports
 cat <<EOF > /app/env.sh
+export PATH="${PATH}"
 export STREAM_URL="${STREAM_URL}"
 export RECORD_DURATION_MINS="${RECORD_DURATION_MINS}"
 export PODCAST_DIR="${PODCAST_DIR}"
